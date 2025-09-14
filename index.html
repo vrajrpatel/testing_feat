@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+
+            
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #2E083D;
+                color: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            nav {
+                background-color: black;
+                width: 100%;
+                padding: 16px 0;
+                margin-bottom: 60px;
+            }
+
+            nav img {
+                padding: 15px;
+                height: 35px;
+                border-radius: 6px;
+            }
+            
+
+            footer {
+                text-align: center;
+                margin-top: 40px;
+            }
+
+            .container {
+                width: 90%;
+                max-width: 1620px;
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+
+            .hero img {
+                width: 100%;
+                height: auto;
+                border-radius: 6px;
+            }
+
+            .now-playing div {
+                display: flex;
+                gap: 20px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .now-playing img {
+                border-radius: 6px;
+            }
+      
+            .now-playing div .left-image {
+                width: 36%;
+            }
+
+            .now-playing div .right-image {
+                display: flex;
+                flex-direction: column;
+                padding-left: 5px;
+                width: 64%;
+            }
+
+            .right-image div {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .signin-container {
+                display: flex;
+                align-items: left;
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .schedule-cards {
+                display: flex;
+                gap: 20px;
+                padding-bottom: 50px;
+                overflow-x: auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .schedule-cards img {
+                width: 140px;
+                object-fit: cover;
+                border-radius: 6px;
+                flex-shrink: 0;
+            }            
+
+            
+            .schedule-cards::-webkit-scrollbar {      
+                height: 10px;      
+                background: #000;
+                /*added*/
+                -webkit-appearance: none;      
+            }      
+
+                      
+            .schedule-cards::-webkit-scrollbar-thumb {
+                background: linear-gradient(to right, #FF5C00, #CB2DF0);
+                border-radius: 5px;
+
+                /*added*/
+                background-color: #555;
+                box-shadow: 0 0 1px rgba(255, 255, 255, 05);
+            }  
+                  
+            .schedule-cards::-webkit-scrollbar-track{
+                background: #000;
+                border-radius: 5px;
+            }
+
+            @media (max-width: 580px) {
+                .container {
+                    max-width: 80%;
+                    padding: 0 20px;
+                }
+
+                nav {
+                    padding: 12px 0;
+                }
+
+                nav img{
+                    padding: 8px 15px; 
+                    height: 25px; 
+                    border-radius: 6px;
+                }
+               
+                 
+                .signin-container {
+                    display: flex;
+                    align-items: center; 
+                    justify-content: space-between;
+                    width: 100%;
+                }
+
+               
+                .signin-container h1 {
+                    font-size: 1rem; 
+                    margin: 0; 
+                    padding-right: 10px; 
+                    font-weight: normal; 
+                }
+
+                .now-playing div {
+                    flex-direction: column;
+                }
+
+                .now-playing div .left-image {
+                    width: 100%;
+                }
+
+                .now-playing div .right-image {
+                    flex-direction: column;
+                    padding-left: 0px;
+                    width: 100%;
+                }
+
+                .right-image div {
+                    flex-direction: column;
+                    width: 100%;
+                }
+
+            }
+   
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="container">
+        <div class="signin-container">
+            <img src="assets/2308_gogglebox_logo.png" alt="gogglebox logo">
+            <h1>Sign In</h1>
+        </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- HERO IMAGE -->
+    <section class="hero">
+      <picture>
+        <source media="(max-width: 580px)" srcset="assets/2308_mobile_hero.jpg">
+        <img src="assets/2308_desktop_hero.jpg" alt="Hero Image" width="100%" height="auto">
+      </picture>
+    </section>
+
+    <!-- NOW PLAYING -->
+    <section class="now-playing">
+      <h2>Now Playing</h2>
+      <div style="width: 100%">
+        <div class="left-image">
+            <img src="assets/2308_01_now_playing.jpg" alt="Now Playing Image 1" style="width:100%; height: auto">
+        </div>
+        <div class="right-image">
+            <img src="assets/2308_02_now_playing.jpg" alt="Now Playing Image 2" style="width:100%; height:auto">
+            <img src="assets/2308_03_now_playing.jpg" alt="Noe Playing Image 3" style="width:100%; height:auto">
+        </div>
+      </div>
+    </section>
+
+    <!-- TOMORROW'S SCHEDULE -->
+    <section class="schedule">
+      <h2>Tomorrow’s Schedule</h2>
+      <div class="schedule-cards" id="tomorrowimg">
+      </div>
+    </section>
+
+  </div>
+  
+
+  <!--COPYRIGHT-->
+  <footer>
+    <p>&copy; Gogglebox 2023 All Rights Reserved</p>
+  </footer>
+
+  <!-- JQuery -->
+  <script>
+      const currentDate = new Date();
+      const tomorrowDate = new Date(currentDate);
+      tomorrowDate.setDate(currentDate.getDate() + 1);
+      
+      const year = tomorrowDate.getFullYear();
+      const month = String(tomorrowDate.getMonth() + 1).padStart(2, '0');
+      const day = String(tomorrowDate.getDate()).padStart(2, '0');
+
+      //grabbing tomorrow's date in YYYY-MM-DD format
+      const formattedDate = `${year}-${month}-${day}`;
+      
+
+      
+
+      $(document).ready(function () {
+
+          $.ajax({
+              url: `https://api.tvmaze.com/schedule?country=US&date=${formattedDate}`, success: function (result) {
+
+
+                  let count = 0;
+                  result.forEach(element => {
+
+                      //check to validate only 24 images are shown
+                      if (count === 24) {
+                          return;
+                      }
+
+                        //check to validate if image is available
+                      if (element.show.image?.medium != undefined) {
+                          $("#tomorrowimg").append('<img src="' + element.show.image?.medium + '" alt="Scheduled Image" loading="lazy">');
+                          count++;
+                      }
+
+                  });
+
+              }
+          });
+
+      });
+  </script>
+
+</body>
+</html>
